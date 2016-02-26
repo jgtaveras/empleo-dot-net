@@ -65,6 +65,8 @@ namespace EmpleoDotNet.Controllers
             return View("Index").WithError("La vacante solicitada no existe. Por favor escoge una vacante válida del listado");
         }
 
+
+        [Authorize]
         public ActionResult New()
         {
             var viewModel = new NewJobOpportunityViewModel();
@@ -77,6 +79,7 @@ namespace EmpleoDotNet.Controllers
         [HttpPost, ValidateAntiForgeryToken]
         [ValidateInput(false)]
         [CaptchaValidator(RequiredMessage = "Por favor confirma que no eres un robot")]
+        [Authorize]
         public async Task<ActionResult> New(NewJobOpportunityViewModel model, bool captchaValid)
         {
 
