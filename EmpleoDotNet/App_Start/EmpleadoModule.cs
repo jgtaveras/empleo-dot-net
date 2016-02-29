@@ -2,7 +2,10 @@
 using EmpleoDotNet.Repository;
 using EmpleoDotNet.Repository.Contracts;
 using EmpleoDotNet.AppServices;
+using EmpleoDotNet.Services;
 using EmpleoDotNet.Services.Social.Twitter;
+using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.EntityFramework;
 using Ninject.Modules;
 using Ninject.Web.Common;
 
@@ -21,7 +24,9 @@ namespace EmpleoDotNet.App_Start
 
             Kernel.Bind<ILocationService>().To<LocationService>();
             Kernel.Bind<IJobOpportunityService>().To<JobOpportunityService>();
-            
+            Kernel.Bind<IAuthenticationService>().To<AuthenticationService>()
+                .WithConstructorArgument("userManager", new UserManager<IdentityUser>(new UserStore<IdentityUser>(new EmpleadoContext())));
+
             Kernel.Bind<ITwitterService>().To<TwitterService>();
         }
     }
